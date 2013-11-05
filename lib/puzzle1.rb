@@ -18,7 +18,7 @@ class Puzzle1 #class is a method that defines puzzle and actually creates a cons
                                                                                    :converters => :all} ) do |row|
     #puts row[1] 
     skus = {
-      "DM1182" => [:amount]
+      "DM1182" => [:amount] #how to get this to put the actual amount from the CSV?
     }
     p skus
     #puts skus["DM1182"][:amount] #right now, referring to skus the hash, needs to be skus the column
@@ -28,8 +28,8 @@ class Puzzle1 #class is a method that defines puzzle and actually creates a cons
   def item
    arr = []
     if @amount == /(\ AUD\z)/
-      # convert AUD to USD
-      ##the nokogiri stuff goes somewhere in here
+      # finds the amounts that have AUD 
+      ##use nokogiri to convert AUDs to USDs??
         doc = Nokogiri::XML(open('/Users/allisonsheren/projects/coder_night/lib/SAMPLE_RATES.xml'))
         doc.xpath("//AUD").each do |node|
           puts node.text
@@ -37,11 +37,11 @@ class Puzzle1 #class is a method that defines puzzle and actually creates a cons
     else
        puts @amount 
     end
-    arr << @amount
+    arr << @amount #puts all the amounts (which are in USD) into an array
   end
 
-  def total_sales
-    @amount.reduce(:+)
+  def total_sales 
+    item.reduce(:+)
   end
 end
 
@@ -49,3 +49,4 @@ p = Puzzle1.new
 p.find_item #calls the method. You need to set p (a variable that refers to an object Puzzle1) to Puzzle1.new. We created the class
 #puzzle1 which created a puzzle object but in order to call the method we have to creat an actual object to call it on 
 p.item 
+p.total_sales
